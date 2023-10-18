@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import  './Customer.css';
 
 function CustomerList() {
     const [customers, setCustomers] = useState([]);
@@ -60,39 +61,56 @@ function CustomerList() {
         }
     };
 
-    return (
-        <div className="list-container">
-            <h2>Customers</h2>
+    // ... (other imports and logic)
 
-            {editing ? (
-                <div>
-                    <h3>Edit Customer</h3>
-                    <button onClick={() => setEditing(false)}>Cancel</button>
-                </div>
-            ) : (
-                <h3>Add New Customer</h3>
-            )}
+return (
+    <div className="list-container">
+        <h2>Customers</h2>
 
-            <input name="name" value={currentCustomer.name} onChange={handleInputChange} placeholder="Name" />
-            <input name="email" value={currentCustomer.email} onChange={handleInputChange} placeholder="Email" />
-            <input name="address" value={currentCustomer.address} onChange={handleInputChange} placeholder="Address" />
-            {editing ? (
-                <button onClick={updateCustomer}>Update</button>
-            ) : (
-                <button onClick={addCustomer}>Add Customer</button>
-            )}
+        {editing ? (
+            <div>
+                <h3>Edit Customer</h3>
+                <button className="glow-button" onClick={() => setEditing(false)}>Cancel</button>
+            </div>
+        ) : (
+            <h3>Add New Customer</h3>
+        )}
 
-            <ul>
+        <input className="input-field" name="name" value={currentCustomer.name} onChange={handleInputChange} placeholder="Name" />
+        <input className="input-field" name="email" value={currentCustomer.email} onChange={handleInputChange} placeholder="Email" />
+        <input className="input-field" name="address" value={currentCustomer.address} onChange={handleInputChange} placeholder="Address" />
+        
+        {editing ? (
+            <button className="glow-button" onClick={updateCustomer}>Update</button>
+        ) : (
+            <button className="glow-button" onClick={addCustomer}>Add Customer</button>
+        )}
+
+        <table className="styled-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
                 {customers.map(customer => (
-                    <li key={customer.id}>
-                        {customer.name} - {customer.email}
-                        <button onClick={() => editCustomer(customer)}>Edit</button>
-                        <button onClick={() => deleteCustomer(customer.id)}>Delete</button>
-                    </li>
+                    <tr key={customer.id}>
+                        <td>{customer.name}</td>
+                        <td>{customer.email}</td>
+                        <td>{customer.address}</td>
+                        <td>
+                            <button className="glow-button" onClick={() => editCustomer(customer)}>Edit</button>
+                            <button className="glow-button" onClick={() => deleteCustomer(customer.id)}>Delete</button>
+                        </td>
+                    </tr>
                 ))}
-            </ul>
-        </div>
-    );
-}
+            </tbody>
+        </table>
+    </div>
+);
 
+}
 export default CustomerList;
